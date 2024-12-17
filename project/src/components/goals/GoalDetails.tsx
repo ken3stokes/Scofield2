@@ -51,11 +51,33 @@ export const GoalDetails: React.FC<GoalDetailsProps> = ({
 
   const handleFieldChange = async (field: keyof Goal, value: any) => {
     try {
-      await db.goals.update(goalId, {
-        [field]: value,
-        updatedAt: new Date()
-      });
+      setEditedGoal((prevGoal) => ({ ...prevGoal, [field]: value }));
+    } catch (error) {
+      toast.error('Failed to update goal');
+      console.error(error);
+    }
+  };
+
+  const handleStatusUpdate = async (newStatus: Goal['status'], newProgress: number) => {
+    try {
+      setEditedGoal((prevGoal) => ({ ...prevGoal, status: newStatus, progress: newProgress }));
+    } catch (error) {
+      toast.error('Failed to update progress');
+      console.error(error);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const updatedGoal = { ...goal, ...editedGoal };
+      const validationErrors = validateGoal(updatedGoal);
+      if (validationErrors.length > 0) {
+        setErrors(validationErrors);
+        return;
+      }
+      await db.goals.update(goalId, updatedGoal);
       toast.success('Goal updated successfully');
+      onEdit();
     } catch (error) {
       toast.error('Failed to update goal');
       console.error(error);
@@ -89,6 +111,25 @@ export const GoalDetails: React.FC<GoalDetailsProps> = ({
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Goal Details</h2>
         </div>
         <div className="flex gap-2">
+          {isEditing ? (
+            <Button
+              variant="primary"
+              icon={<Save />}
+              onClick={handleSave}
+              className="text-white bg-blue-600 hover:bg-blue-700"
+            >
+              Save Changes
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              icon={<Edit2 />}
+              onClick={onEdit}
+              className="text-blue-600 border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+            >
+              Edit
+            </Button>
+          )}
           <Button
             variant="outline"
             icon={<Trash2 />}
