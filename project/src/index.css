@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900;
+  }
+}
+
+@layer components {
+  .blueprint-bg {
+    @apply bg-[#ECF0F1] bg-opacity-90 dark:bg-gray-800 dark:bg-opacity-90;
+    background-image: 
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0px, transparent 1px),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
+
+/* Dark mode transitions */
+* {
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Custom Scrollbar - Light & Dark */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 dark:bg-gray-600;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500 dark:bg-gray-500;
+}
+
+/* Input Focus Styles */
+input:focus, select:focus, textarea:focus {
+  @apply ring-2 ring-blue-500 ring-opacity-50 border-blue-500 dark:border-blue-400 dark:bg-gray-800;
+  outline: none;
+}
+
+/* Form Controls */
+input, select, textarea {
+  @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700;
+}
+
+/* Progress Bar Styling */
+progress {
+  @apply rounded-full overflow-hidden;
+  height: 8px;
+}
+
+progress::-webkit-progress-bar {
+  @apply bg-gray-200 dark:bg-gray-700;
+}
+
+progress::-webkit-progress-value {
+  @apply bg-blue-500 dark:bg-blue-400;
+  transition: width 0.3s ease-in-out;
+}
+
+/* Range Input Styling */
+input[type="range"] {
+  @apply appearance-none bg-gray-200 dark:bg-gray-700 h-2 rounded-lg;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 rounded-full bg-blue-500 dark:bg-blue-400 cursor-pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Text Colors */
+.text-primary {
+  @apply text-gray-900 dark:text-white;
+}
+
+.text-secondary {
+  @apply text-gray-600 dark:text-gray-300;
+}
+
+.text-muted {
+  @apply text-gray-500 dark:text-gray-400;
+}
