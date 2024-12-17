@@ -60,7 +60,20 @@ export const GoalDetails: React.FC<GoalDetailsProps> = ({
 
   const handleStatusUpdate = async (newStatus: Goal['status'], newProgress: number) => {
     try {
-      setEditedGoal((prevGoal) => ({ ...prevGoal, status: newStatus, progress: newProgress }));
+      await db.goals.update(goalId, {
+        status: newStatus,
+        progress: newProgress,
+        updatedAt: new Date()
+      });
+      
+      // Update local state to reflect the change
+      setEditedGoal(prev => ({
+        ...prev,
+        status: newStatus,
+        progress: newProgress
+      }));
+      
+      toast.success('Progress updated successfully');
     } catch (error) {
       toast.error('Failed to update progress');
       console.error(error);
