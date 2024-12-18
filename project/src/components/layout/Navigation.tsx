@@ -1,6 +1,7 @@
 import React from 'react';
-import { Target, BarChart2, List, Sun, Moon } from 'lucide-react';
+import { Target, BarChart2, List } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { GlowingBorder } from '../home/shared/GlowingBorder';
 import type { Route } from '../../types/routes';
 
 interface NavigationProps {
@@ -16,13 +17,13 @@ export const Navigation: React.FC<NavigationProps> = ({ currentRoute, onRouteCha
   ];
 
   return (
-    <nav className="bg-white shadow dark:bg-gray-800 transition-colors">
+    <nav className="bg-[#0F172A] border-b border-blue-500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <button
               onClick={() => onRouteChange('home')}
-              className="flex items-center gap-2 px-4 py-2 text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-white hover:text-blue-400 transition-colors"
             >
               <Target className="w-6 h-6" />
               <span className="font-bold text-lg">Scofield</span>
@@ -33,11 +34,14 @@ export const Navigation: React.FC<NavigationProps> = ({ currentRoute, onRouteCha
                 <button
                   key={id}
                   onClick={() => onRouteChange(id)}
-                  className={`inline-flex items-center px-4 py-2 border-b-2 text-sm font-medium ${
-                    currentRoute === id
-                      ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400'
-                      : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300'
-                  }`}
+                  className={`
+                    inline-flex items-center px-4 py-2 text-sm font-medium
+                    ${currentRoute === id
+                      ? 'text-blue-400 border-b-2 border-blue-400'
+                      : 'text-gray-300 hover:text-blue-300 border-b-2 border-transparent'
+                    }
+                    transition-all duration-300
+                  `}
                 >
                   <Icon className="w-5 h-5 mr-2" />
                   {label}

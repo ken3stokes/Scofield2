@@ -1,10 +1,10 @@
 import React from 'react';
-import { HeroBackground } from './hero/HeroBackground';
-import { HeroContent } from './hero/HeroContent';
+import { HeroBackground } from './HeroBackground';
+import { HeroContent } from './HeroContent';
 
 interface HeroProps {
   onGetStarted: () => void;
-  onNavigate: (route: 'about') => void;
+  onNavigate: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onGetStarted, onNavigate }) => {

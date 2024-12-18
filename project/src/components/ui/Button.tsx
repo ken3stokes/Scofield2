@@ -2,7 +2,7 @@ import React from 'react';
 import { TRANSITIONS } from '../../theme/constants';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'glow';
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
@@ -25,14 +25,23 @@ export const Button: React.FC<ButtonProps> = ({
     focus:outline-none focus:ring-2 focus:ring-offset-2
     transform hover:-translate-y-0.5 active:translate-y-0
     disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
-    dark:focus:ring-offset-gray-800
   `;
   
   const variantStyles = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:ring-blue-500',
-    secondary: 'bg-gray-600 text-white hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-gray-500',
-    outline: 'border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:ring-gray-500',
-    ghost: 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-500'
+    primary: 'bg-blue-600 text-white hover:bg-blue-700',
+    secondary: 'bg-gray-600 text-white hover:bg-gray-700',
+    outline: 'border-2 border-gray-300 text-gray-700 hover:bg-gray-50',
+    ghost: 'text-gray-700 hover:bg-gray-100',
+    glow: `
+      relative overflow-hidden
+      bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500
+      text-white font-semibold
+      hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]
+      before:absolute before:inset-0
+      before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent
+      before:translate-x-[-200%] hover:before:translate-x-[200%]
+      before:transition-transform before:duration-1000
+    `
   };
 
   const sizeStyles = {

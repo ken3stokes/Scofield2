@@ -6,20 +6,30 @@ import { HomePage } from './pages/HomePage';
 import { Dashboard } from './components/dashboard/Dashboard';
 import { GoalList } from './components/goals/GoalList';
 import { AnalyticsPage } from './pages/AnalyticsPage';
-import { COLORS, BLUEPRINT_PATTERNS } from './theme/constants';
+import { AboutPage } from './pages/AboutPage';
 import type { Route } from './types/routes';
 
-function App() {
+const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<Route>('home');
+  const [showAbout, setShowAbout] = useState(false);
 
   const handleNavigate = (route: Route) => {
     setCurrentRoute(route);
+    setShowAbout(false);
+  };
+
+  const handleShowAbout = () => {
+    setShowAbout(true);
   };
 
   const renderRoute = () => {
+    if (showAbout) {
+      return <AboutPage onBack={() => setShowAbout(false)} />;
+    }
+
     switch (currentRoute) {
       case 'home':
-        return <HomePage onNavigate={handleNavigate} />;
+        return <HomePage onNavigate={handleNavigate} onShowAbout={handleShowAbout} />;
       case 'dashboard':
         return <Dashboard />;
       case 'goals':
@@ -27,51 +37,32 @@ function App() {
       case 'analytics':
         return <AnalyticsPage />;
       default:
-        return <HomePage onNavigate={handleNavigate} />;
+        return <HomePage onNavigate={handleNavigate} onShowAbout={handleShowAbout} />;
     }
   };
 
   return (
-    <div 
-      className="min-h-screen"
-      style={{ 
-        backgroundColor: COLORS.background,
-        backgroundImage: BLUEPRINT_PATTERNS.grid,
-        backgroundSize: BLUEPRINT_PATTERNS.gridSize,
-        backgroundAttachment: 'fixed'
-      }}
-    >
+    <div className="min-h-screen bg-[#0F172A]">
       <Toaster 
         position="top-right"
         toastOptions={{
           style: {
-            background: COLORS.paper,
-            color: COLORS.text.primary,
-            border: `1px solid ${COLORS.border}`
+            background: '#1E293B',
+            color: '#E2E8F0',
+            border: '1px solid rgba(59, 130, 246, 0.2)'
           }
         }} 
       />
       
-      <header className="bg-gradient-to-r from-[#1B2631] to-[#34495E] shadow-lg">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
-            <Target className="w-8 h-8 text-white" />
-            <h1 className="text-3xl font-bold text-white">Scofield</h1>
-          </div>
-        </div>
-      </header>
-
-      {currentRoute !== 'home' && (
+      {currentRoute !== 'home' && !showAbout && (
         <Navigation currentRoute={currentRoute} onRouteChange={handleNavigate} />
       )}
 
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0 space-y-8">
-          {renderRoute()}
-        </div>
+      <main>
+        {renderRoute()}
       </main>
     </div>
   );
-}
+};
 
 export default App;
